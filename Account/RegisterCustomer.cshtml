@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="auth-bg">
+    <div class="auth-card register-customer">
+        <h2>Register</h2>
+        @using (Html.BeginForm("RegisterCustomer", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <input type="text" name="FirstName" placeholder="First Name" required />
+            <input type="text" name="LastName" placeholder="Last Name" required />
+            <input type="text" name="Username" placeholder="Username" required />
+            <input type="email" name="Email" placeholder="Email" required />
+            <input type="password" name="Password" placeholder="Password" required />
+            <input type="text" name="StudentID" placeholder="Student ID" required />
+            <input type="text" name="Section" placeholder="Section" required />
+            <input type="date" name="Birthdate" required />
+            <input type="text" name="ContactNumber" placeholder="Contact Number" required />
+
+            <div class="upload-link-wrapper">
+                <input type="file" name="QcuId" id="qcuFile" accept="image/*,.pdf" required style="display: none;" />
+                <a href="#" class="upload-text-link" onclick="document.getElementById('qcuFile').click(); return false;">Upload QCU ID</a>
+                <span class="file-name-display" id="qcuFileName">No file chosen</span>
+            </div>
+
+            <button type="submit" class="auth-btn">Register</button>
+        }
+        <div class="auth-links">
+            <a href="@Url.Action("Login","Account")">Already have an account? Login</a><br />
+            <span>Want to Sell? <a href="@Url.Action("RegisterEnterprise","Account")">Sign Up Here</a></span>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('qcuFile').addEventListener('change', function (e) {
+        var fileName = e.target.files.length > 0 ? e.target.files[0].name : 'No file chosen';
+        document.getElementById('qcuFileName').innerText = fileName;
+    });
+</script>
