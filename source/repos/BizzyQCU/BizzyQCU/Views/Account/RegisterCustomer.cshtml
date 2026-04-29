@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="auth-bg">
+    <div class="auth-card register-customer">
+        <h2>Register</h2>
+        @using (Html.BeginForm("RegisterCustomer", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <input type="text" name="FirstName" placeholder="First Name" required />
+            <input type="text" name="LastName" placeholder="Last Name" required />
+            <input type="text" name="Username" placeholder="Username" required />
+            <input type="email" name="Email" placeholder="Email" required />
+            <input type="password" name="Password" placeholder="Password" required />
+
+            <!-- Student ID - Numbers Only -->
+            <input type="text" name="StudentID" id="StudentID" placeholder="Student ID" required
+                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                   oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+
+            <input type="text" name="Section" placeholder="Section" required />
+            <input type="date" name="Birthdate" required />
+
+            <!-- Contact Number - Numbers Only -->
+            <input type="text" name="ContactNumber" id="ContactNumber" placeholder="Contact Number" required
+                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                   oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                   maxlength="11" />
+
+            <div class="upload-link-wrapper">
+                <input type="file" name="QcuId" id="qcuFile" accept="image/*,.pdf" required style="display: none;" />
+                <a href="#" class="upload-text-link" onclick="document.getElementById('qcuFile').click(); return false;">Upload QCU ID</a>
+                <span class="file-name-display" id="qcuFileName">No file chosen</span>
+            </div>
+
+            <button type="submit" class="auth-btn">Register</button>
+        }
+        <div class="auth-links">
+            <a href="@Url.Action("Login","Account")">Already have an account? Login</a><br />
+            <span>Want to Sell? <a href="@Url.Action("RegisterEnterprise","Account")">Sign Up Here</a></span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // @@ts-nocheck
+    document.getElementById('qcuFile').onchange = function() {
+        var span = document.getElementById('qcuFileName');
+        if (span && this.files && this.files[0]) {
+            span.innerText = this.files[0].name;
+        } else if (span) {
+            span.innerText = 'No file chosen';
+        }
+    };
+</script>
