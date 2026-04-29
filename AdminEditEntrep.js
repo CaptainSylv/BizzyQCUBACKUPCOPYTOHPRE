@@ -211,8 +211,7 @@ document.getElementById('viewDocsBtn').addEventListener('click', () => {
 });
 
 document.getElementById('viewListingBtn').addEventListener('click', () => {
-    // TODO (DB): navigate to or open listing request for this enterprise
-    alert('View Listing Request — wire to backend when ready.');
+    window.location.href = 'AdminItemListing.html';
 });
 
 // ── REMOVE ITEM ──
