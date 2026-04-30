@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="auth-bg">
+    <div class="auth-card login-card">
+        <h2>LOGIN</h2>
+
+        <div id="messageBox" style="display:none; padding:12px; margin-bottom:20px; border-radius:10px; font-size:13px;"></div>
+
+        <form onsubmit="return loginUser(event)">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit" class="auth-btn">LOGIN</button>
+        </form>
+
+        <div class="auth-links">
+            New to BizzyQCU? <a href="@Url.Action("RegisterStudent", "Home")">Sign up</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showMessage(message, type) {
+        const msgBox = document.getElementById('messageBox');
+        msgBox.textContent = message;
+        msgBox.style.backgroundColor = type === 'error' ? '#fee' : '#e8f5e9';
+        msgBox.style.color = type === 'error' ? '#c33' : '#2e7d32';
+        msgBox.style.border = type === 'error' ? '1px solid #fcc' : '1px solid #c8e6c9';
+        msgBox.style.display = 'block';
+
+        setTimeout(() => {
+            msgBox.style.display = 'none';
+        }, 3000);
+    }
+
+    function loginUser(event) {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const users = JSON.parse(localStorage.getItem('bizzyqcu_users') || '[]');
+        const user = users.find(u => u.username === username && u.password === password);
+
+        if (user) {
+            sessionStorage.setItem('currentUser', JSON.stringify(user));
+            const displayName = user.firstName || user.enterpriseName || user.username;
+            showMessage(`Welcome ${displayName}! Login successful.`, 'success');
+
+            setTimeout(() => {
+                alert(`Logged in as: ${displayName}\nUser Type: ${user.userType === 'student' ? 'Student' : 'Enterprise'}`);
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+            }, 1500);
+        } else {
+            showMessage('Invalid username or password!', 'error');
+        }
+
+        return false;
+    }
+</script>

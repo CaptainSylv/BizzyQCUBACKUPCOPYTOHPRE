@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "Enterprise Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="auth-bg">
+    <div class="auth-card register-enterprise">
+        <h2>ENTERPRISE REGISTER</h2>
+
+        <div id="messageBox" style="display:none; padding:12px; margin-bottom:20px; border-radius:10px; font-size:13px;"></div>
+
+        <form id="registerForm" onsubmit="return registerEnterprise(event)">
+            <input type="text" id="enterpriseName" placeholder="Enterprise Name" required>
+
+            <select id="enterpriseType" required>
+                <option value="">-- Select Type of Enterprise --</option>
+                <option value="Food Business">Food Business</option>
+                <option value="Product Retail">Product Retail</option>
+            </select>
+
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="email" id="email" placeholder="Email Address" required>
+
+            <!-- Contact Number - numbers only (mobile or landline) -->
+            <input type="text" id="contact" placeholder="Contact Number"
+                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                   maxlength="11"
+                   title="Enter 11-digit mobile (09123456789) or 7-digit landline (1234567)" required>
+
+            <div class="upload-link-wrapper">
+                <span class="upload-text-link" onclick="document.getElementById('documents').click()">📎 Upload Document/s</span>
+                <span id="fileNamesDisplay" class="file-name-display">No files chosen</span>
+                <input type="file" id="documents" multiple accept=".pdf,.jpg,.png" style="display:none" onchange="updateFileNames()">
+            </div>
+
+            <button type="submit" class="auth-btn">REGISTER</button>
+        </form>
+
+        <div class="auth-links">
+            Already have an account? <a href="@Url.Action("Login", "Home")">Login</a><br />
+            Want to Buy? <a href="@Url.Action("RegisterStudent", "Home")">Sign Up Here</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateFileNames() {
+        const fileInput = document.getElementById('documents');
+        const fileNamesDisplay = document.getElementById('fileNamesDisplay');
+        if (fileInput.files.length > 0) {
+            let names = [];
+            for (let i = 0; i < fileInput.files.length; i++) {
+                names.push(fileInput.files[i].name);
+            }
+            fileNamesDisplay.textContent = names.join(', ');
+        } else {
+            fileNamesDisplay.textContent = 'No files chosen';
+        }
+    }
+
+    function showMessage(message, type) {
+        const msgBox = document.getElementById('messageBox');
+        msgBox.textContent = message;
+        msgBox.style.backgroundColor = type === 'error' ? '#fee' : '#e8f5e9';
+        msgBox.style.color = type === 'error' ? '#c33' : '#2e7d32';
+        msgBox.style.border = type === 'error' ? '1px solid #fcc' : '1px solid #c8e6c9';
+        msgBox.style.display = 'block';
+
+        setTimeout(() => {
+            msgBox.style.display = 'none';
+        }, 5000);
+    }
+
+    function validateContactNumber(contact) {
+        const mobilePattern = /^[0-9]{11}$/;
+        const landlinePattern = /^[0-9]{7}$/;
+        return mobilePattern.test(contact) || landlinePattern.test(contact);
+    }
+
+    function registerEnterprise(event) {
+        event.preventDefault();
+
+        const enterpriseName = document.getElementById('enterpriseName').value;
+        const enterpriseType = document.getElementById('enterpriseType').value;
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const contact = document.getElementById('contact').value;
+
+        if (!enterpriseName || !enterpriseType || !username || !email || !password || !contact) {
+            showMessage('Please fill in all required fields!', 'error');
+            return false;
+        }
+
+        // Validate Contact Number
+        if (!validateContactNumber(contact)) {
+            showMessage('Contact Number must be 11 digits (mobile) or 7 digits (landline)!', 'error');
+            return false;
+        }
+
+        let users = JSON.parse(localStorage.getItem('bizzyqcu_users') || '[]');
+        const userExists = users.some(u => u.username === username || u.email === email);
+
+        if (userExists) {
+            showMessage('Username or Email already exists!', 'error');
+            return false;
+        }
+
+        let fileNames = [];
+        const fileInput = document.getElementById('documents');
+        if (fileInput.files.length > 0) {
+            for (let i = 0; i < fileInput.files.length; i++) {
+                fileNames.push(fileInput.files[i].name);
+            }
+        }
+
+        const newEnterprise = {
+            id: Date.now(),
+            enterpriseName: enterpriseName,
+            enterpriseType: enterpriseType,
+            username: username,
+            email: email,
+            password: password,
+            contact: contact,
+            documents: fileNames.join(', '),
+            userType: 'enterprise',
+            registeredDate: new Date().toISOString(),
+            isApproved: false
+        };
+
+        users.push(newEnterprise);
+        localStorage.setItem('bizzyqcu_users', JSON.stringify(users));
+
+        showMessage('Registration submitted! Awaiting approval. Redirecting to login...', 'success');
+
+        setTimeout(() => {
+            window.location.href = '@Url.Action("Login", "Home")';
+        }, 2000);
+
+        return false;
+    }
+</script>
