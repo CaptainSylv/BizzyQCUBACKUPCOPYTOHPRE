@@ -11,18 +11,17 @@
     <nav class="main-navbar">
         <div class="nav-container">
 
-            <!-- DESKTOP: LOGO AT NAV LINKS -->
+           
             <div class="nav-left">
-<<<<<<< HEAD
-                <img src="~/images/logo.png" alt="BizzyQCU" class="logo" />
-=======
+           
+
                 <img src="~/Content/images/bizzyqcu logo.png" alt="BizzyQCU" class="logo" />
->>>>>>> 873990e (login and register)
+
                 <div class="nav-divider"></div>
             </div>
 
             <div class="nav-links">
-<<<<<<< HEAD
+
                 <a href="#">HOME</a>
                 <a href="#">PRODUCTS</a>
                 <a href="#">ENTERPRISES</a>
@@ -35,7 +34,7 @@
             <!-- MOBILE: CENTER LOGO -->
             <div class="nav-center">
                 <img src="~/images/logo.png" alt="BizzyQCU" class="logo" />
-=======
+
                 <a href="@Url.Action("Login", "Home")">HOME</a>
                 <a href="#" onclick="alert('Products page coming soon!')">PRODUCTS</a>
                 <a href="#" onclick="alert('Enterprises page coming soon!')">ENTERPRISES</a>
@@ -48,7 +47,7 @@
             <!-- MOBILE: CENTER LOGO -->
             <div class="nav-center">
                 <img src="~/Content/images/bizzyqcu logo.png" alt="BizzyQCU" class="logo" />
->>>>>>> 873990e (login and register)
+
             </div>
 
             <!-- MOBILE: HAMBURGER -->
@@ -59,21 +58,20 @@
 
     <!-- SLIDE DOWN MENU -->
     <div class="mobile-menu" id="mobileMenu">
-<<<<<<< HEAD
+
         <a href="#" onclick="toggleMenu()">HOME</a>
         <a href="#" onclick="toggleMenu()">PRODUCTS</a>
         <a href="#" onclick="toggleMenu()">ENTERPRISES</a>
         <a href="#" onclick="toggleMenu()">ABOUT US</a>
         <a href="#" onclick="toggleMenu()">LOG IN</a>
         <a href="#" onclick="toggleMenu()">REGISTER</a>
-=======
+
         <a href="@Url.Action("Login", "Home")" onclick="toggleMenu()">HOME</a>
         <a href="#" onclick="toggleMenu(); alert('Products page coming soon!')">PRODUCTS</a>
         <a href="#" onclick="toggleMenu(); alert('Enterprises page coming soon!')">ENTERPRISES</a>
         <a href="#" onclick="toggleMenu(); alert('About Us page coming soon!')">ABOUT US</a>
         <a href="@Url.Action("Login", "Home")" onclick="toggleMenu()">LOG IN</a>
         <a href="@Url.Action("RegisterStudent", "Home")" onclick="toggleMenu()">REGISTER</a>
->>>>>>> 873990e (login and register)
     </div>
 
     @RenderBody()
