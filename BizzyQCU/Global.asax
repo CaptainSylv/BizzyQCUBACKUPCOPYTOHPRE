@@ -1,21 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
+﻿<%@ Application Language="C#" %>
+<%@ Import Namespace="System.Web.Mvc" %>
+<%@ Import Namespace="System.Web.Routing" %>
+<%@ Import Namespace="BizzyQCU" %>
 
-namespace BizzyQCU
-{
-    public class MvcApplication : System.Web.HttpApplication
+<script runat="server">
+    protected void Application_Start(object sender, EventArgs e)
     {
-        protected void Application_Start()
-        {
-            AreaRegistration.RegisterAllAreas();
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-        }
+        AreaRegistration.RegisterAllAreas();
+        RouteConfig.RegisterRoutes(RouteTable.Routes);
     }
-}
+</script>

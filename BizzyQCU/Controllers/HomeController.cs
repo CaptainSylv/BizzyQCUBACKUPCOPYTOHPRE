@@ -1,13 +1,9 @@
-<<<<<<< HEAD
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-=======
-﻿using System.Web.Mvc;
->>>>>>> 873990e (login and register)
-
 namespace BizzyQCU.Controllers
 {
     public class HomeController : Controller
@@ -17,7 +13,6 @@ namespace BizzyQCU.Controllers
             return View();
         }
 
-<<<<<<< HEAD
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -31,9 +26,7 @@ namespace BizzyQCU.Controllers
 
             return View();
         }
-    }
-}
-=======
+
         public ActionResult RegisterStudent()
         {
             return View();
@@ -45,4 +38,7 @@ namespace BizzyQCU.Controllers
         }
     }
 }
->>>>>>> 873990e (login and register)
+
+
+
+       
